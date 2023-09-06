@@ -11,6 +11,7 @@ const char* ByteCode::Str(int bytecode)
         _ENTRY(INPLACE_ADD),
         _ENTRY(PRINT_ITEM),
         _ENTRY(PRINT_NEWLINE),
+        _ENTRY(BREAK_LOOP),
         _ENTRY(RETURN_VALUE),
         _ENTRY(POP_BLOCK),
 

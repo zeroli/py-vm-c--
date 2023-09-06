@@ -9,6 +9,7 @@ struct ByteCode {
         INPLACE_ADD = 55,
         PRINT_ITEM = 71,
         PRINT_NEWLINE = 72,
+        BREAK_LOOP = 80,
         RETURN_VALUE = 83,
         POP_BLOCK = 87,
 

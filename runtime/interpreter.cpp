@@ -11,6 +11,7 @@
 
 #define PUSH(x) _stack->add(x)
 #define POP() _stack->pop()
+#define STACK_LEVEL() _stack->size()
 #define LOG_BYTECODE(x) printf(" ->%s\n", ByteCode::Str(x))
 
 Interpreter::Interpreter()
@@ -26,6 +27,8 @@ Interpreter::~Interpreter() {
 void Interpreter::run(CodeObject* codes)
 {
     printf("\npython interpeter starts...\n");
+    _loop_stack = new ArrayList<Block*>();
+
     int pc = 0;
     int code_length = codes->_bytecodes->length();
 
@@ -138,9 +141,25 @@ void Interpreter::run(CodeObject* codes)
                 break;
             }
             case ByteCode::SETUP_LOOP: {
+                _loop_stack->add(new Block(
+                    op_code, pc + op_arg,
+                    STACK_LEVEL())
+                );
                 break;
             }
             case ByteCode::POP_BLOCK: {
+                auto b = _loop_stack->pop();
+                while (STACK_LEVEL() > b->_level) {
+                    POP();
+                }
+                break;
+            }
+            case ByteCode::BREAK_LOOP: {
+                auto b = _loop_stack->pop();
+                while (STACK_LEVEL() > b->_level) {
+                    POP();
+                }
+                pc = b->_target;
                 break;
             }
             default: {
