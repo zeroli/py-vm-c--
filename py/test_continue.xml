@@ -1,0 +1,57 @@
+<code>
+   <argcount> 0 </argcount>
+   <nlocals> 0</nlocals>
+   <stacksize> 2</stacksize>
+   <flags> 0040</flags>
+   <code>
+      6400005a00007831006500006401006b0000723900650000640200375a00
+      006500006403006b00007231007109006e00006500004748710900576404
+      0053
+   </code>
+   <dis>
+  1           0 LOAD_CONST               0 (0)
+              3 STORE_NAME               0 (i)
+
+  2           6 SETUP_LOOP              49 (to 58)
+        >>    9 LOAD_NAME                0 (i)
+             12 LOAD_CONST               1 (10)
+             15 COMPARE_OP               0 (<)
+             18 POP_JUMP_IF_FALSE       57
+
+  3          21 LOAD_NAME                0 (i)
+             24 LOAD_CONST               2 (1)
+             27 INPLACE_ADD
+             28 STORE_NAME               0 (i)
+
+  4          31 LOAD_NAME                0 (i)
+             34 LOAD_CONST               3 (2)
+             37 COMPARE_OP               0 (<)
+             40 POP_JUMP_IF_FALSE       49
+
+  5          43 JUMP_ABSOLUTE            9
+             46 JUMP_FORWARD             0 (to 49)
+
+  6     >>   49 LOAD_NAME                0 (i)
+             52 PRINT_ITEM
+             53 PRINT_NEWLINE
+             54 JUMP_ABSOLUTE            9
+        >>   57 POP_BLOCK
+        >>   58 LOAD_CONST               4 (None)
+             61 RETURN_VALUE
+   </dis>
+   <names> ('i',)</names>
+   <varnames> ()</varnames>
+   <freevars> ()</freevars>
+   <cellvars> ()</cellvars>
+   <filename> '../py/test_continue.py'</filename>
+   <name> '<module>'</name>
+   <firstlineno> 1</firstlineno>
+   <consts>
+      0
+      10
+      1
+      2
+      None
+   </consts>
+   <lnotab> 06010f010a010c010601</lnotab>
+</code>
