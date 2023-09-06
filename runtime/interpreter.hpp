@@ -8,17 +8,15 @@ class HiObject;
 
 class Interpreter {
 public:
-    Interpreter() = default;
-    ~Interpreter() {
-        delete _stack;
-    }
+    Interpreter();
+    ~Interpreter();
 
     void run(CodeObject* code);
 
 private:
     ArrayList<HiObject*>* _stack;
     ArrayList<HiObject*>* _consts;
-
+    ArrayList<HiObject*>* _names;
 };
 
 #endif  // INTERPRETER_H_

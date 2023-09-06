@@ -1,0 +1,47 @@
+<code>
+   <argcount> 0 </argcount>
+   <nlocals> 0</nlocals>
+   <stacksize> 2</stacksize>
+   <flags> 0040</flags>
+   <code>
+      6400005a0000781f006500006401006b0000722700650000474865000064
+      0200375a00007109005764030053
+   </code>
+   <dis>
+  1           0 LOAD_CONST               0 (0)
+              3 STORE_NAME               0 (i)
+
+  2           6 SETUP_LOOP              31 (to 40)
+        >>    9 LOAD_NAME                0 (i)
+             12 LOAD_CONST               1 (2)
+             15 COMPARE_OP               0 (<)
+             18 POP_JUMP_IF_FALSE       39
+
+  3          21 LOAD_NAME                0 (i)
+             24 PRINT_ITEM
+             25 PRINT_NEWLINE
+
+  4          26 LOAD_NAME                0 (i)
+             29 LOAD_CONST               2 (1)
+             32 INPLACE_ADD
+             33 STORE_NAME               0 (i)
+             36 JUMP_ABSOLUTE            9
+        >>   39 POP_BLOCK
+        >>   40 LOAD_CONST               3 (None)
+             43 RETURN_VALUE
+   </dis>
+   <names> ('i',)</names>
+   <varnames> ()</varnames>
+   <freevars> ()</freevars>
+   <cellvars> ()</cellvars>
+   <filename> '../py/test_while.py'</filename>
+   <name> '<module>'</name>
+   <firstlineno> 1</firstlineno>
+   <consts>
+      0
+      2
+      1
+      None
+   </consts>
+   <lnotab> 06010f010501</lnotab>
+</code>

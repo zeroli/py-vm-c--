@@ -7,17 +7,31 @@
 #include "object/hiInteger.hpp"
 #include "runtime/universe.hpp"
 
+#include <cassert>
+
 #define PUSH(x) _stack->add(x)
 #define POP() _stack->pop()
+#define LOG_BYTECODE(x) printf(" ->%s\n", ByteCode::Str(x))
+
+Interpreter::Interpreter()
+{
+    Universe::genesis();
+}
+
+Interpreter::~Interpreter() {
+    delete _stack;
+    Universe::destroy();
+}
 
 void Interpreter::run(CodeObject* codes)
 {
-    printf("python interpeter starts...\n");
+    printf("\npython interpeter starts...\n");
     int pc = 0;
     int code_length = codes->_bytecodes->length();
 
     _stack = new ArrayList<HiObject*>(codes->_stack_size);
     _consts = codes->_consts;
+    _names = codes->_names;
 
     while (pc < code_length) {
         unsigned char op_code = codes->_bytecodes->value()[pc++];
@@ -31,9 +45,26 @@ void Interpreter::run(CodeObject* codes)
         HiInteger *lhs, *rhs;
         HiObject *v, *w, *u, *attr;
 
+        LOG_BYTECODE(op_code);
+
         switch (op_code) {
+            case ByteCode::INPLACE_ADD: {
+                w = POP();
+                v = POP();
+                PUSH(v->add(w));
+                break;
+            }
+            case ByteCode::STORE_NAME: {
+                v = POP();
+                _names->set(op_arg, v);
+                break;
+            }
             case ByteCode::LOAD_CONST: {
                 PUSH(_consts->get(op_arg));
+                break;
+            }
+            case ByteCode::LOAD_NAME: {
+                PUSH(_names->get(op_arg));
                 break;
             }
             case ByteCode::PRINT_ITEM: {
@@ -46,9 +77,9 @@ void Interpreter::run(CodeObject* codes)
                 break;
             }
             case ByteCode::BINARY_ADD: {
-                v = POP();
                 w = POP();
-                PUSH(w->add(v));
+                v = POP();
+                PUSH(v->add(w));
                 break;
             }
             case ByteCode::RETURN_VALUE: {
@@ -86,6 +117,7 @@ void Interpreter::run(CodeObject* codes)
                     }
                     default: {
                         printf("Error: Unrecognized compare op %d\n", op_arg);
+                        assert(0);
                     }
                 }
                 break;
@@ -101,10 +133,22 @@ void Interpreter::run(CodeObject* codes)
                 pc += op_arg;
                 break;
             }
+            case ByteCode::JUMP_ABSOLUTE: {
+                pc = op_arg;
+                break;
+            }
+            case ByteCode::SETUP_LOOP: {
+                break;
+            }
+            case ByteCode::POP_BLOCK: {
+                break;
+            }
             default: {
                 printf("Error: Unrecognized byte code: %d\n", op_code);
+                assert(0);
             }
         }
     }
-    printf("python interpeter ends...\n");
+
+    printf("\npython interpeter ends...\n");
 }

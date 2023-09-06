@@ -16,7 +16,11 @@ HiObject* HiInteger::greater(HiObject* x) {
 }
 
 HiObject* HiInteger::less(HiObject* x) {
-    return _value < ((HiInteger*)x) -> _value ? Universe::HiTrue : Universe::HiFalse;
+    if (_value < ((HiInteger*)x) -> _value) {
+        return Universe::HiTrue;
+    } else {
+        return Universe::HiFalse;
+    }
 }
 
 HiObject* HiInteger::equal(HiObject* x) {

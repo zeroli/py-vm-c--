@@ -10,6 +10,7 @@ add_executable(${PROJECT_NAME}
     object/hiString.cpp
     object/hiInteger.cpp
     code/binaryFileParser.cpp
+    code/bytecode.cpp
     runtime/interpreter.cpp
     runtime/universe.cpp
 )

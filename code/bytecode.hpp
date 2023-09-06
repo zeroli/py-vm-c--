@@ -6,17 +6,25 @@
 struct ByteCode {
     enum {
         BINARY_ADD = 23,
-
+        INPLACE_ADD = 55,
         PRINT_ITEM = 71,
         PRINT_NEWLINE = 72,
         RETURN_VALUE = 83,
+        POP_BLOCK = 87,
 
         HAVE_ARGUMENT = 90,
+        STORE_NAME = 90,
         LOAD_CONST = 100,
+        LOAD_NAME = 101,
         COMPARE_OP = 107,
         JUMP_FORWARD = 110,
+        JUMP_ABSOLUTE = 113,
         POP_JUMP_IF_FALSE = 114,
+        SETUP_LOOP = 120,
+
     };
+
+    static const char* Str(int bytecode);
 };
 
 enum COMPARE {

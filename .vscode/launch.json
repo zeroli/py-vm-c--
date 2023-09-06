@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/py-vm.exe",
             "args": [
-                "${workspaceFolder}/py/hello.pyc"
+                "${workspaceFolder}/py/test_while.pyc"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
