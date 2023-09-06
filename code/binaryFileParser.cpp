@@ -143,7 +143,9 @@ HiString* BinaryFileParser::get_name() {
 }
 
 HiString* BinaryFileParser::get_lno_table() {
-    assert(file_stream->read() == 't');
+    // we found it might be 't' or 's'
+    auto c = file_stream->read();
+    assert(c == 't' || c == 's');
     return get_string();
 }
 

@@ -1,0 +1,45 @@
+<code>
+   <argcount> 0 </argcount>
+   <nlocals> 0</nlocals>
+   <stacksize> 2</stacksize>
+   <flags> 0040</flags>
+   <code>
+      6400006401006b040072140064000047486e050064010047486402004748
+      64030053
+   </code>
+   <dis>
+  1           0 LOAD_CONST               0 (2)
+              3 LOAD_CONST               1 (1)
+              6 COMPARE_OP               4 (>)
+              9 POP_JUMP_IF_FALSE       20
+
+  2          12 LOAD_CONST               0 (2)
+             15 PRINT_ITEM
+             16 PRINT_NEWLINE
+             17 JUMP_FORWARD             5 (to 25)
+
+  4     >>   20 LOAD_CONST               1 (1)
+             23 PRINT_ITEM
+             24 PRINT_NEWLINE
+
+  6     >>   25 LOAD_CONST               2 (3)
+             28 PRINT_ITEM
+             29 PRINT_NEWLINE
+             30 LOAD_CONST               3 (None)
+             33 RETURN_VALUE
+   </dis>
+   <names> ()</names>
+   <varnames> ()</varnames>
+   <freevars> ()</freevars>
+   <cellvars> ()</cellvars>
+   <filename> '../py/test_if.py'</filename>
+   <name> '<module>'</name>
+   <firstlineno> 1</firstlineno>
+   <consts>
+      2
+      1
+      3
+      None
+   </consts>
+   <lnotab> 0c0108020502</lnotab>
+</code>

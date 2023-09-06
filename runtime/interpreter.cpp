@@ -6,6 +6,9 @@
 #include "object/hiString.hpp"
 #include "object/hiInteger.hpp"
 
+#define PUSH(x) _stack->add(x)
+#define POP() _stack->pop()
+
 void Interpreter::run(CodeObject* codes)
 {
     printf("python interpeter starts...\n");
@@ -49,6 +52,52 @@ void Interpreter::run(CodeObject* codes)
             }
             case ByteCode::RETURN_VALUE: {
                 _stack->pop();
+                break;
+            }
+            case ByteCode::COMPARE_OP: {
+                w = POP();
+                v = POP();
+
+                switch (op_arg) {
+                    case GREATER: {
+                        PUSH(v->greater(w));
+                        break;
+                    }
+                    case LESS: {
+                        PUSH(v->less(w));
+                        break;
+                    }
+                    case EQUAL: {
+                        PUSH(v->equal(w));
+                        break;
+                    }
+                    case NOT_EQUAL: {
+                        PUSH(v->not_equal(w));
+                        break;
+                    }
+                    case GREATER_EQUAL: {
+                        PUSH(v->ge(w));
+                        break;
+                    }
+                    case LESS_EQUAL: {
+                        PUSH(v->le(w));
+                        break;
+                    }
+                    default: {
+                        printf("Error: Unrecognized compare op %d\n", op_arg);
+                    }
+                }
+                break;
+            }
+            case ByteCode::POP_JUMP_IF_FALSE: {
+                v = POP();
+                if (((HiInteger*)v)->value() == 0) {
+                    pc = op_arg;
+                }
+                break;
+            }
+            case ByteCode::JUMP_FORWARD: {
+                pc += op_arg;
                 break;
             }
             default: {
