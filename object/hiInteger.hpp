@@ -11,6 +11,9 @@ public:
     HiInteger(int x) : _value(x) { }
     int value() const { return _value; }
 
+    virtual void print() override;
+
+    virtual HiObject* add(HiObject* x) override;
 };
 
 #endif  // HI_INTEGER_H_

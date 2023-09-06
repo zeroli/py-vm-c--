@@ -11,6 +11,9 @@ private:
 public:
     HiString(const char* x);
     HiString(const char* x, const int length);
+    ~HiString() {
+        delete[] _value;
+    }
 
     const char* value() const {
         return _value;

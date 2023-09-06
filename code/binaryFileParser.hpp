@@ -28,6 +28,7 @@ private:
     ArrayList<HiObject*>* get_free_vars();
     ArrayList<HiObject*>* get_cell_vars();
     HiString* get_file_name();
+    HiString* get_module_name();
     HiString* get_name();
 
     HiString* get_lno_table();

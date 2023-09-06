@@ -47,7 +47,7 @@ CodeObject* BinaryFileParser::get_code_object() {
     ArrayList<HiObject*>* free_vars = get_free_vars();
     ArrayList<HiObject*>* cell_vars = get_cell_vars();
     HiString* file_name = get_file_name();
-    HiString* module_name = get_name();
+    HiString* module_name = get_module_name();
     int begin_line_no = file_stream->read_int();
     HiString* lnotab = get_lno_table();
 
@@ -113,10 +113,18 @@ ArrayList<HiObject*>* BinaryFileParser::get_var_names() {
 }
 
 ArrayList<HiObject*>* BinaryFileParser::get_free_vars() {
+    if (file_stream->read() == '(') {
+        return get_tuple();
+    }
+    file_stream->unread();
     return nullptr;
 }
 
 ArrayList<HiObject*>* BinaryFileParser::get_cell_vars() {
+    if (file_stream->read() == '(') {
+        return get_tuple();
+    }
+    file_stream->unread();
     return nullptr;
 }
 
@@ -125,11 +133,17 @@ HiString* BinaryFileParser::get_file_name() {
     return get_name();
 }
 
+HiString* BinaryFileParser::get_module_name() {
+    assert(file_stream->read() == 't');
+    return get_name();
+}
+
 HiString* BinaryFileParser::get_name() {
     return get_string();
 }
 
 HiString* BinaryFileParser::get_lno_table() {
+    assert(file_stream->read() == 't');
     return get_string();
 }
 
