@@ -11,6 +11,7 @@ add_executable(${PROJECT_NAME}
     object/hiInteger.cpp
     code/binaryFileParser.cpp
     runtime/interpreter.cpp
+    runtime/universe.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC

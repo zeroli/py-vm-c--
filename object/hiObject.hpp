@@ -3,6 +3,8 @@
 
 class HiObject {
 public:
+    virtual ~HiObject() = default;
+
     virtual void print() { }
     virtual HiObject* add(HiObject* x) { return nullptr; }
 

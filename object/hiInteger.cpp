@@ -1,4 +1,5 @@
 #include "hiInteger.hpp"
+#include "runtime/universe.hpp"
 
 #include <cstdio>
 
@@ -11,25 +12,25 @@ HiObject* HiInteger::add(HiObject* x) {
 }
 
 HiObject* HiInteger::greater(HiObject* x) {
-    return new HiInteger(_value > ((HiInteger*)x) -> _value);
+    return _value > ((HiInteger*)x) -> _value ? Universe::HiTrue : Universe::HiFalse;
 }
 
 HiObject* HiInteger::less(HiObject* x) {
-    return new HiInteger(_value < ((HiInteger*)x) -> _value);
+    return _value < ((HiInteger*)x) -> _value ? Universe::HiTrue : Universe::HiFalse;
 }
 
 HiObject* HiInteger::equal(HiObject* x) {
-    return new HiInteger(_value == ((HiInteger*)x) -> _value);
+    return _value == ((HiInteger*)x) -> _value ? Universe::HiTrue : Universe::HiFalse;
 }
 
 HiObject* HiInteger::not_equal(HiObject* x) {
-    return new HiInteger(_value != ((HiInteger*)x) -> _value);
+    return _value != ((HiInteger*)x) -> _value ? Universe::HiTrue : Universe::HiFalse;
 }
 
 HiObject* HiInteger::ge(HiObject* x) {
-    return new HiInteger(_value >= ((HiInteger*)x) -> _value);
+    return _value >= ((HiInteger*)x) -> _value ? Universe::HiTrue : Universe::HiFalse;
 }
 
 HiObject* HiInteger::le(HiObject* x) {
-    return new HiInteger(_value <= ((HiInteger*)x) -> _value);
+    return _value <= ((HiInteger*)x) -> _value ? Universe::HiTrue : Universe::HiFalse;
 }

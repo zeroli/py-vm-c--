@@ -5,6 +5,7 @@
 #include "code/bytecode.hpp"
 #include "object/hiString.hpp"
 #include "object/hiInteger.hpp"
+#include "runtime/universe.hpp"
 
 #define PUSH(x) _stack->add(x)
 #define POP() _stack->pop()
@@ -32,11 +33,11 @@ void Interpreter::run(CodeObject* codes)
 
         switch (op_code) {
             case ByteCode::LOAD_CONST: {
-                _stack->add(_consts->get(op_arg));
+                PUSH(_consts->get(op_arg));
                 break;
             }
             case ByteCode::PRINT_ITEM: {
-                v = _stack->pop();
+                v = POP();
                 v->print();
                 break;
             }
@@ -45,13 +46,13 @@ void Interpreter::run(CodeObject* codes)
                 break;
             }
             case ByteCode::BINARY_ADD: {
-                v = _stack->pop();
-                w = _stack->pop();
-                _stack->add(w->add(v));
+                v = POP();
+                w = POP();
+                PUSH(w->add(v));
                 break;
             }
             case ByteCode::RETURN_VALUE: {
-                _stack->pop();
+                POP();
                 break;
             }
             case ByteCode::COMPARE_OP: {
@@ -91,7 +92,7 @@ void Interpreter::run(CodeObject* codes)
             }
             case ByteCode::POP_JUMP_IF_FALSE: {
                 v = POP();
-                if (((HiInteger*)v)->value() == 0) {
+                if (v == Universe::HiFalse) {
                     pc = op_arg;
                 }
                 break;
