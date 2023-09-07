@@ -5,6 +5,7 @@
 
 struct ByteCode {
     enum {
+        POP_TOP = 1,
         BINARY_ADD = 23,
         INPLACE_ADD = 55,
         PRINT_ITEM = 71,
@@ -22,7 +23,8 @@ struct ByteCode {
         JUMP_ABSOLUTE = 113,
         POP_JUMP_IF_FALSE = 114,
         SETUP_LOOP = 120,
-
+        CALL_FUNCTION = 131,
+        MAKE_FUNCTION = 132,
     };
 
     static const char* Str(int bytecode);

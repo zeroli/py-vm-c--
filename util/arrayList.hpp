@@ -13,7 +13,7 @@ private:
     void expand();
 
 public:
-    ArrayList(int n = 0);
+    ArrayList(int n = 1);
 
     void add(T t);
     void insert(int index, T t);
@@ -64,7 +64,6 @@ void ArrayList<T>::expand() {
     delete[] _array;
     _array = new_array;
     _length <<= 1;
-    printf("expand an array to %d, size is %d\n", _length, _size);
 }
 
 template <typename T>

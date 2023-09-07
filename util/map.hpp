@@ -34,7 +34,7 @@ public:
     V remove(K k);
     int index(K k);
 
-    MapEntry<K, V>* entries { return _entries; }
+    MapEntry<K, V>* entries() { return _entries; }
 };
 
 template <typename K, typename V>

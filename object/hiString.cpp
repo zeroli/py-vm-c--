@@ -12,7 +12,7 @@ StringKlass* StringKlass::get_instance() {
 
 void StringKlass::print(HiObject* obj) {
     auto* o = static_cast<HiString*>(obj);
-    printf("str(%p, %d)", (void*)o->value(), o->length());
+    printf("str(0x%p, %d)", (void*)o->value(), o->length());
 }
 
 #define IMPL_COMP_OP(func, op) \

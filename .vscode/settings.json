@@ -4,6 +4,7 @@
         "limits": "cpp",
         "type_traits": "cpp",
         "compare": "cpp",
-        "cstdlib": "cpp"
+        "cstdlib": "cpp",
+        "system_error": "cpp"
     }
 }

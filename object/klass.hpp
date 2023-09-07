@@ -2,6 +2,7 @@
 #define KLASS_H_
 
 class HiString;
+class HiObject;
 
 class Klass {
 private:

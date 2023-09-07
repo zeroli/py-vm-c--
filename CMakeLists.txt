@@ -10,10 +10,12 @@ add_executable(${PROJECT_NAME}
     object/hiString.cpp
     object/hiInteger.cpp
     object/hiObject.cpp
+    object/hiFunction.cpp
     code/binaryFileParser.cpp
     code/bytecode.cpp
     runtime/interpreter.cpp
     runtime/universe.cpp
+    runtime/frameObject.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
