@@ -2,6 +2,24 @@
 #define HI_STRING_H_
 
 #include "hiObject.hpp"
+#include "klass.hpp"
+
+class StringKlass : public Klass {
+private:
+    StringKlass() = default;
+
+public:
+    static StringKlass* get_instance();
+
+    virtual void print(HiObject* obj) override;
+
+    #define DECL_BINARY_OP(func) \
+        virtual HiObject* func(HiObject* x, HiObject* y) override
+
+    DECL_BINARY_OP(equal);
+
+    #undef DECL_BINARY_OP
+};
 
 class HiString : public HiObject {
 private:
