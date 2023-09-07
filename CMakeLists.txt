@@ -9,6 +9,7 @@ add_executable(${PROJECT_NAME}
     main.cpp
     object/hiString.cpp
     object/hiInteger.cpp
+    object/hiObject.cpp
     code/binaryFileParser.cpp
     code/bytecode.cpp
     runtime/interpreter.cpp
