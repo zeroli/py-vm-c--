@@ -5,6 +5,7 @@
         "type_traits": "cpp",
         "compare": "cpp",
         "cstdlib": "cpp",
-        "system_error": "cpp"
+        "system_error": "cpp",
+        "cassert": "cpp"
     }
 }

@@ -7,7 +7,7 @@ class Klass;
 
 class HiObject {
 private:
-    Klass* _klass;
+    Klass* _klass = nullptr;
 
 public:
     Klass* klass() {

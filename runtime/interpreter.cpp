@@ -16,12 +16,17 @@
 #define STACK_LEVEL() _frame->_stack->size()
 #define LOG_BYTECODE(x) printf(" ->%s\n", ByteCode::Str(x))
 
+
+#define HI_TRUE Universe::HiTrue
+#define HI_FALSE Universe::HiFalse
+
 Interpreter::Interpreter()
 {
     Universe::genesis();
 }
 
 Interpreter::~Interpreter() {
+    delete _builtins;
     delete _frame;
     Universe::destroy();
 }
@@ -29,6 +34,11 @@ Interpreter::~Interpreter() {
 void Interpreter::run(CodeObject* codes)
 {
     printf("\npython interpeter starts...\n");
+    _builtins = new Map<HiObject*, HiObject*>();
+    _builtins->put(new HiString("True"), Universe::HiTrue);
+    _builtins->put(new HiString("False"), Universe::HiFalse);
+    _builtins->put(new HiString("None"), Universe::HiNone);
+
     _frame = new FrameObject(codes);
 
     eval_frame();
@@ -69,8 +79,8 @@ void Interpreter::eval_frame() {
                 break;
             }
             case ByteCode::STORE_NAME: {
-                v = POP();
-                _frame->names()->set(op_arg, v);
+                v = _frame->names()->get(op_arg);
+                _frame->locals()->put(v, POP());
                 break;
             }
             case ByteCode::LOAD_CONST: {
@@ -78,7 +88,23 @@ void Interpreter::eval_frame() {
                 break;
             }
             case ByteCode::LOAD_NAME: {
-                PUSH(_frame->names()->get(op_arg));
+                v = _frame->names()->get(op_arg);
+                w = _frame->locals()->get(v);
+                if (w != Universe::HiNone) {
+                    PUSH(w);
+                    break;
+                }
+                w = _frame->globals()->get(v);
+                if (w != Universe::HiNone) {
+                    PUSH(w);
+                    break;
+                }
+                w = _builtins->get(v);
+                if (w != Universe::HiNone) {
+                    PUSH(w);
+                    break;
+                }
+                PUSH(Universe::HiNone);
                 break;
             }
             case ByteCode::PRINT_ITEM: {
@@ -101,6 +127,22 @@ void Interpreter::eval_frame() {
                 v = POP();
 
                 switch (op_arg) {
+                    case IS: {
+                        if (v == w) {
+                            PUSH(HI_TRUE);
+                        } else {
+                            PUSH(HI_FALSE);
+                        }
+                        break;
+                    }
+                    case IS_NOT: {
+                        if (v == w) {
+                            PUSH(HI_FALSE);
+                        } else {
+                            PUSH(HI_TRUE);
+                        }
+                        break;
+                    }
                     case GREATER: {
                         PUSH(v->greater(w));
                         break;
@@ -172,6 +214,7 @@ void Interpreter::eval_frame() {
             case ByteCode::MAKE_FUNCTION: {
                 v = POP();
                 auto* fo = new HiFunction(v);
+                fo->set_globals(_frame->globals());
                 PUSH(fo);
                 break;
             }

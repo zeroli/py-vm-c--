@@ -2,6 +2,7 @@
 #define INTERPRETER_H_
 
 #include "util/arrayList.hpp"
+#include "util/map.hpp"
 
 class CodeObject;
 class HiObject;
@@ -15,6 +16,7 @@ public:
     void run(CodeObject* code);
 
 private:
+    Map<HiObject*, HiObject*>* _builtins;
     FrameObject* _frame { nullptr };
 
 private:

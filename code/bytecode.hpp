@@ -37,6 +37,8 @@ enum COMPARE {
     NOT_EQUAL,
     GREATER,
     GREATER_EQUAL,
+    IS = 8,
+    IS_NOT,
 };
 
 

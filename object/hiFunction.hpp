@@ -3,6 +3,7 @@
 
 #include "klass.hpp"
 #include "hiObject.hpp"
+#include "util/map.hpp"
 
 class HiObject;
 class CodeObject;
@@ -33,6 +34,9 @@ public:
     HiString* func_name() const { return _func_name; }
     unsigned int flags() const { return _flags; }
     CodeObject* func_code() const { return _func_code; }
+
+    void set_globals(Map<HiObject*, HiObject*>* x) { _globals = x; }
+    Map<HiObject*, HiObject*>* _globals;
 };
 
 #endif  // HI_FUNCTION_H_

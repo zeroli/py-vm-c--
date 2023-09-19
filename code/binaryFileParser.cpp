@@ -4,6 +4,7 @@
 #include "util/bufferInputStream.hpp"
 #include "object/hiString.hpp"
 #include "object/hiInteger.hpp"
+#include "runtime/universe.hpp"
 
 #include <cstdio>
 #include <cassert>
@@ -129,17 +130,26 @@ ArrayList<HiObject*>* BinaryFileParser::get_cell_vars() {
 }
 
 HiString* BinaryFileParser::get_file_name() {
-    assert(file_stream->read() == 's');
     return get_name();
 }
 
 HiString* BinaryFileParser::get_module_name() {
-    assert(file_stream->read() == 't');
     return get_name();
 }
 
 HiString* BinaryFileParser::get_name() {
-    return get_string();
+    char ch = file_stream->read();
+    if (ch == 's') {
+        return get_string();
+    }
+    else if (ch == 't') {
+        HiString* str = get_string();
+        _string_table.add(str);
+        return str;
+    } else if (ch == 'R') {
+        return _string_table.get(file_stream->read_int());
+    }
+    return nullptr;
 }
 
 HiString* BinaryFileParser::get_lno_table() {
@@ -167,7 +177,7 @@ ArrayList<HiObject*>* BinaryFileParser::get_tuple() {
             break;
         }
         case 'N': {
-            list->add(NULL);
+            list->add(Universe::HiNone);
             break;
         }
         case 't': {
