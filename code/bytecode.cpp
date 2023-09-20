@@ -25,6 +25,7 @@ const char* ByteCode::Str(int bytecode)
         _ENTRY(JUMP_ABSOLUTE),
         _ENTRY(POP_JUMP_IF_FALSE),
         _ENTRY(SETUP_LOOP),
+        _ENTRY(LOAD_FAST),
         _ENTRY(CALL_FUNCTION),
         _ENTRY(MAKE_FUNCTION),
     };

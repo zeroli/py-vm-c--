@@ -20,7 +20,7 @@ private:
     FrameObject* _frame { nullptr };
 
 private:
-    void build_frame(HiObject* callable);
+    void build_frame(HiObject* callable, ArrayList<HiObject*>* args);
     void eval_frame();
     void destroy_frame();
     void leave_frame(HiObject* ret);

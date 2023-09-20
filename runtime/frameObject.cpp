@@ -12,6 +12,8 @@ FrameObject::FrameObject(CodeObject* codes) {
 
     _locals = new Map<HiObject*, HiObject*>();
     _globals = _locals;
+    _fast_locals = nullptr;
+
     _stack = new ArrayList<HiObject*>();
     _loop_stack = new ArrayList<Block*>();
 
@@ -19,13 +21,15 @@ FrameObject::FrameObject(CodeObject* codes) {
     _pc = 0;
 }
 
-FrameObject::FrameObject(HiFunction* func)
+FrameObject::FrameObject(HiFunction* func, ObjList* args)
     : FrameObject(func->func_code()) {
     _globals = func->_globals;
+    _fast_locals = args;
 }
 
 FrameObject::~FrameObject() {
     delete _locals;
+    delete _fast_locals;
     delete _stack;
     delete _loop_stack;
 }

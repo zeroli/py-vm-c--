@@ -10,6 +10,7 @@
 #include "runtime/frameObject.hpp"
 
 #include <cassert>
+#include <memory>
 
 #define PUSH(x) _frame->_stack->add(x)
 #define POP() _frame->_stack->pop()
@@ -47,8 +48,8 @@ void Interpreter::run(CodeObject* codes)
     printf("\npython interpeter ends...\n");
 }
 
-void Interpreter::build_frame(HiObject* callable) {
-    auto* frame = new FrameObject(static_cast<HiFunction*>(callable));
+void Interpreter::build_frame(HiObject* callable, ArrayList<HiObject*>* args) {
+    auto* frame = new FrameObject(static_cast<HiFunction*>(callable), args);
     frame->set_sender(_frame);
     _frame = frame;
 }
@@ -196,6 +197,11 @@ void Interpreter::eval_frame() {
                 );
                 break;
             }
+            case ByteCode::LOAD_FAST: {
+                PUSH(_frame->fast_locals()->get(op_arg));
+                break;
+            }
+
             case ByteCode::POP_BLOCK: {
                 auto b = _frame->loop_stack()->pop();
                 while (STACK_LEVEL() > b->_level) {
@@ -219,8 +225,14 @@ void Interpreter::eval_frame() {
                 break;
             }
             case ByteCode::CALL_FUNCTION: {
-                v = POP();
-                build_frame(v);
+                std::unique_ptr<ArrayList<HiObject*>> args;
+                if (op_arg > 0) {
+                    args.reset(new ArrayList<HiObject*>(op_arg));
+                    while (op_arg--) {
+                        args->set(op_arg, POP());
+                    }
+                }
+                build_frame(POP(), args.release());
                 break;
             }
             case ByteCode::RETURN_VALUE: {

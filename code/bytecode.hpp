@@ -23,6 +23,7 @@ struct ByteCode {
         JUMP_ABSOLUTE = 113,
         POP_JUMP_IF_FALSE = 114,
         SETUP_LOOP = 120,
+        LOAD_FAST = 124,
         CALL_FUNCTION = 131,
         MAKE_FUNCTION = 132,
     };
