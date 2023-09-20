@@ -221,6 +221,15 @@ void Interpreter::eval_frame() {
                 v = POP();
                 auto* fo = new HiFunction(v);
                 fo->set_globals(_frame->globals());
+                std::unique_ptr<ArrayList<HiObject*>> args;
+                if (op_arg > 0) {  // defaults# for function
+                    args.reset(new ArrayList<HiObject*>(op_arg));
+                    while (op_arg--) {
+                        args->set(op_arg, POP());
+                    }
+                }
+                fo->set_defaults(args.release());
+
                 PUSH(fo);
                 break;
             }
